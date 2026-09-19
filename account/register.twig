@@ -1,51 +1,155 @@
 {{ header }}
 
-<div class="register-page">
-  <div class="container">
-    <div class="register-layout row">
-      <div class="col-lg-12 col-md-12 col-sm-24 col-xs-24 register-left-col">
-        <div class="register-left-box">
-          <h2>E-posta doğrulama</h2>
-          <p>Yeni kayıt oluşturduğunuzda e-posta adresinize bir aktivasyon kodu gönderilir.</p>
-          <p>E-postanızı doğrulamak için gönderilen kodu formdaki aktivasyon alanına yazınız.</p>
-          <p class="small-text">Kod 15 dakika geçerlidir. Gönderilen kodu almadıysanız spam klasörünü kontrol edebilirsiniz.</p>
-        </div>
-      </div>
-      <div class="col-lg-12 col-md-12 col-sm-24 col-xs-24 register-right-col">
-        <div class="register-card">
-          <div class="register-tabs"><a href="{{ login }}">Giriş Yap</a><a href="{{ register }}" class="active">Üye Ol</a></div>
-          <div id="register-message" class="register-message" role="alert"></div>
-          <form id="register-form" action="{{ action }}" method="post" novalidate>
-            <div id="registration-fields">
-              <div class="form-row row">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-24"><div class="form-group"><label for="firstname">{{ entry_firstname }}</label><input id="firstname" type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" class="form-control" required><div class="field-error" data-error="firstname"></div></div></div>
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-24"><div class="form-group"><label for="lastname">{{ entry_lastname }}</label><input id="lastname" type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" class="form-control" required><div class="field-error" data-error="lastname"></div></div></div>
-              </div>
-              <div class="form-group"><label for="dogum_tarihi">Doğum Tarihi</label><input id="dogum_tarihi" type="date" name="dogum_tarihi" value="{{ dogum_tarihi }}" class="form-control" required><div class="field-error" data-error="dogum"></div></div>
-              <div class="form-group"><label for="email">{{ entry_email }}</label><input id="email" type="email" name="email" value="{{ email }}" placeholder="{{ entry_email }}" class="form-control" required><div class="field-error" data-error="email"></div></div>
-              <div class="form-group"><label for="telephone">{{ entry_telephone }}</label><input id="telephone" type="tel" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" class="form-control" required><div class="field-error" data-error="telephone"></div></div>
-              <div class="form-row row">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-24"><div class="form-group"><label for="password">{{ entry_password }}</label><input id="password" type="password" name="password" placeholder="{{ entry_password }}" class="form-control" required><div class="field-error" data-error="password"></div></div></div>
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-24"><div class="form-group"><label for="confirm">{{ entry_confirm }}</label><input id="confirm" type="password" name="confirm" placeholder="{{ entry_confirm }}" class="form-control" required><div class="field-error" data-error="confirm"></div></div></div>
-              </div>
-              <div class="register-agree"><label><input type="checkbox" name="agree" value="1" {% if agree %}checked{% endif %} required><span>{{ text_agree }}</span></label></div>
-              <button type="submit" id="send-code" class="register-button">Kayıt ol ve kod gönder</button>
+<div class="full-container main-container login-container" style="padding-top: 160px; padding-bottom: 80px; background-color: #fdfdfd;">
+    <div class="container">
+        <form action="{{ action }}" method="post" enctype="multipart/form-data">
+            
+            <div class="row" style="display: flex; flex-wrap: wrap; align-items: center;"> 
+                
+                <div class="col-lg-12 col-md-12 hidden-sm hidden-xs" style="padding: 0 15px;">
+                    <img class="img-responsive" src="catalog/view/theme/default/image/login-img.png" alt="Giriş" style="width: 100%; border-radius: 10px;">
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-24 col-xs-24" style="padding: 0 15px;">
+                    <div style="background: #ffffff; padding: 35px; border-radius: 12px; border: 1px solid #eee; box-shadow: 0 8px 20px rgba(0,0,0,0.02);">
+                        
+                        <div style="margin-bottom: 30px; border-bottom: 1px solid #eee;">
+                            <ul class="nav nav-tabs" style="display: flex; border: none; justify-content: space-around; margin: 0;">
+                                <li style="flex: 1; text-align: center;">
+                                    <a href="{{ login }}" style="font-size: 16px; color: #bbb; border: none; padding-bottom: 12px; display: block; background: transparent;">Giriş Yap</a>
+                                </li>
+                                <li class="active" style="flex: 1; text-align: center; ">
+                                    <a href="{{ register }}" style="font-size: 16px; color: #333; border: none; font-weight: 600; padding-bottom: 12px; display: block; background: transparent;">Üye Ol</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="login-form">
+                            <!-- Ad ve Soyad -->
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label style="font-size: 13px; color: #666;">{{ entry_firstname }}</label>
+                                        <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" class="form-control" style="height: 45px; border-radius: 6px;" />
+                                        {% if error_firstname %}<div class="text-danger" style="font-size: 11px;">{{ error_firstname }}</div>{% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label style="font-size: 13px; color: #666;">{{ entry_lastname }}</label>
+                                        <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" class="form-control" style="height: 45px; border-radius: 6px;" />
+                                        {% if error_lastname %}<div class="text-danger" style="font-size: 11px;">{{ error_lastname }}</div>{% endif %}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- E-posta ve Telefon Yan Yana -->
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label style="font-size: 13px; color: #666;">{{ entry_email }}</label>
+                                        <input type="email" name="email" value="{{ email }}" placeholder="{{ entry_email }}" class="form-control" style="height: 45px; border-radius: 6px;" />
+                                        {% if error_email %}<div class="text-danger" style="font-size: 11px;">{{ error_email }}</div>{% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label style="font-size: 13px; color: #666;">{{ entry_telephone }}</label>
+                                        <input type="tel" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" class="form-control" style="height: 45px; border-radius: 6px;" />
+                                        {% if error_telephone %}<div class="text-danger" style="font-size: 11px;">{{ error_telephone }}</div>{% endif %}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Doğum Tarihi Alt Satırda -->
+                            <div class="form-group">
+                                <label style="font-size: 13px; color: #666;">Doğum Tarihi</label>
+                                <input type="date" name="dogum_tarihi" value="{{ dogum_tarihi }}" class="form-control" style="height: 45px; border-radius: 6px;" />
+                                {% if error_dogum %}<div class="text-danger" style="font-size: 11px;">{{ error_dogum }}</div>{% endif %}
+                            </div>
+
+                            <!-- Parola ve Parola Tekrarı -->
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label style="font-size: 13px; color: #666;">{{ entry_password }}</label>
+                                        <input type="password" name="password" value="{{ password }}" placeholder="{{ entry_password }}" class="form-control" style="height: 45px; border-radius: 6px;" />
+                                        {% if error_password %}<div class="text-danger" style="font-size: 11px;">{{ error_password }}</div>{% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label style="font-size: 13px; color: #666;">{{ entry_confirm }}</label>
+                                        <input type="password" name="confirm" value="{{ confirm }}" placeholder="{{ entry_confirm }}" class="form-control" style="height: 45px; border-radius: 6px;" />
+                                         {% if error_confirm %}<div class="text-danger" style="font-size: 11px;">{{ error_confirm }}</div>{% endif %}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group" style="margin: 25px 0;">
+                                <div class="checkbox-wrapper" style="display: flex; align-items: flex-start; cursor: pointer;">
+                                    <input type="checkbox" name="agree" value="1" id="agree-check" {% if agree %} checked {% endif %} style="width: 18px; height: 18px; margin: 0 10px 0 0; cursor: pointer; flex-shrink: 0; position: relative; z-index: 10;" /> 
+                                    <label for="agree-check" style="font-size: 13px; color: #555; cursor: pointer; font-weight: normal; line-height: 18px; margin: 0;">
+                                        {{ text_agree }}
+                                    </label>
+                                </div>
+                                {% if error_warning %}<div class="text-danger" style="font-size: 11px; margin-top: 5px;">{{ error_warning }}</div>{% endif %}
+                            </div>
+
+                            {% if redirect %}
+                                <input type="hidden" name="redirect" value="{{ redirect }}" />
+                            {% endif %}
+
+                            <button type="submit" class="btn btn-primary btn-block" style="height: 52px; font-size: 16px; font-weight: 600; background: #222; border: none; border-radius: 6px;">KAYDET</button>
+                        </div>
+                    </div>
+                </div> 
+
             </div>
-            <div id="verification-fields" class="verification-box{% if not activation_required %} is-hidden{% endif %}">
-              <div class="verification-icon"><i class="fa fa-envelope-o"></i></div><h3>E-postanızı kontrol edin</h3><p>Gönderilen 6 haneli aktivasyon kodunu aşağıya yazın.</p>
-              <div class="form-group"><label for="activation-code">Aktivasyon Kodu</label><input id="activation-code" type="text" name="activation_code" value="{{ activation_code }}" maxlength="6" inputmode="numeric" autocomplete="one-time-code" class="form-control activation-input" placeholder="000000"><div class="field-error" data-error="activation_code"></div></div>
-              <button type="button" id="verify-code" class="register-button">Kodu doğrula ve kaydı tamamla</button><button type="button" id="back-to-form" class="back-button">Bilgilerimi düzenle</button>
-            </div>
-          </form>
-        </div>
-      </div>
+        </form>
     </div>
-  </div>
 </div>
 <style>
-.register-page{background:#f5f5f5;padding:60px 0 80px}.register-layout{display:flex;align-items:stretch}.register-left-col,.register-right-col{padding:0 15px}.register-left-box,.register-card{height:100%;min-height:620px;background:#fff;border:1px solid #ececec;border-radius:10px}.register-left-box{padding:42px 32px;display:flex;flex-direction:column;justify-content:center}.register-left-box h2{font-size:36px;line-height:1.2;margin:0 0 18px;color:#222;font-weight:500}.register-left-box p{font-size:17px;line-height:1.7;color:#5d5d5d;margin:0 0 18px}.register-left-box .small-text{font-size:15px;color:#666}.register-card{padding:20px 25px 30px}.register-tabs{display:flex;border-bottom:1px solid #e7e7e7;margin-bottom:26px}.register-tabs a{flex:1;text-align:center;padding:14px 10px 16px;font-size:16px;color:#8d8d8d;text-decoration:none;font-weight:500}.register-tabs a.active{color:#111;border-bottom:2px solid #111;margin-bottom:-1px}.form-row{margin-left:-8px;margin-right:-8px}.form-row>div{padding-left:8px;padding-right:8px}.form-group{margin-bottom:18px}.form-group label{display:block;margin-bottom:7px;font-size:12px;color:#666;font-weight:600}.form-control{width:100%;height:46px;border-radius:6px;border:1px solid #dfe3e8;box-shadow:none;padding:8px 12px;font-size:14px;color:#222;background:#fff}.form-control:focus{border-color:#b8b8b8;box-shadow:none}.register-agree{margin:10px 0 20px;font-size:12px;color:#555}.register-agree label{display:flex;align-items:center;gap:8px;cursor:pointer}.register-agree input{margin:0}.register-button{width:100%;height:48px;background:#111;color:#fff;border:none;border-radius:6px;font-size:15px;font-weight:600;cursor:pointer}.register-button:hover{background:#333}.register-message{display:none;border-radius:6px;padding:10px 12px;margin-bottom:16px;font-size:13px}.register-message.success{display:block;background:#edf8f0;color:#216a3d}.register-message.error{display:block;background:#fff0f0;color:#a53232}.field-error{min-height:16px;margin-top:4px;font-size:11px;color:#d02d2d}.verification-box{padding-top:10px;text-align:center}.verification-icon{width:62px;height:62px;border-radius:50%;background:#f5f5f5;color:#111;display:flex;align-items:center;justify-content:center;font-size:22px;margin:0 auto 18px}.verification-box h3{font-size:26px;margin:0 0 10px;color:#202020}.verification-box p{color:#666;font-size:14px;margin:0 0 20px}.activation-input{text-align:center;letter-spacing:6px;font-size:20px}.back-button{display:block;width:100%;background:transparent;border:none;color:#6f6f6f;margin-top:12px;cursor:pointer;font-size:13px}.is-hidden{display:none}@media(max-width:767px){.register-page{padding:30px 0 50px}.register-left-box,.register-card{min-height:auto}.register-left-box{padding:28px 22px}.register-left-box h2{font-size:28px}.register-left-box p{font-size:15px}.register-card{padding:18px 16px 24px}}
+.text-danger {
+    color: #dc3545;
+    font-size: 1.5rem;
+    margin-top: 5px;
+}
 </style>
 {{ footer }}
 <script>
-(function($){var form=$('#register-form'),message=$('#register-message'),registration=$('#registration-fields'),verification=$('#verification-fields');function showMessage(text,type){message.removeClass('success error').addClass(type).text(text).show()}function clearErrors(){$('.field-error').text('');message.hide()}function renderErrors(errors){$.each(errors||{},function(key,value){$('[data-error="'+key+'"]').text(value)})}function ajaxCall(url,data,callback){$.ajax({url:url,type:'post',data:data,dataType:'json'}).done(callback).fail(function(){showMessage('İşlem sırasında bir hata oluştu. Lütfen tekrar deneyin.','error')})}form.on('submit',function(e){e.preventDefault();clearErrors();var button=$('#send-code').prop('disabled',true);ajaxCall('{{ send_code_url }}',form.serialize(),function(result){button.prop('disabled',false);if(result.success){registration.addClass('is-hidden');verification.removeClass('is-hidden');showMessage(result.message,'success');$('#activation-code').focus()}else{renderErrors(result.errors);if(result.message)showMessage(result.message,'error')}})});$('#verify-code').on('click',function(){clearErrors();var button=$(this).prop('disabled',true);ajaxCall('{{ verify_code_url }}',{activation_code:$('#activation-code').val()},function(result){button.prop('disabled',false);if(result.success){window.location.href=result.redirect}else{if(result.message){showMessage(result.message,'error');$('[data-error="activation_code"]').text(result.message)}}})});$('#back-to-form').on('click',function(){verification.addClass('is-hidden');registration.removeClass('is-hidden');message.hide()})})(jQuery)
+$(document).ready(function() {
+  $('.nav-tabs li').on('click', function() {
+    var url = $(this).data('href');
+    if (url) {
+      window.location.href = url;
+    }
+  });
+});
 </script>
+<script>
+$(document).ready(function() {
+  var error_warning = '{{error_warning}}';
+    if (error_warning) {
+      $('#alert').append('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i>' + error_warning + '</div>');
+    }
+});
+</script>
+<script>
+var alert = function () {
+    window.setTimeout(function () {
+        $('.alert-dismissible').fadeTo(2000, 0, function () {
+            $(this).remove();
+        });
+    }, 5000);
+}
+</script>
+<script>
+$('.text-agree').on('click', function() {
+    $('#modal-information').show();
+});
+</script>
+
+<div class="form-footer-spacer"></div>
+
+<hr>
