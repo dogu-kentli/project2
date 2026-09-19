@@ -1,56 +1,80 @@
 {{ header }}
 
-<div class="full-container main-container login-container" style="padding-top: 160px; padding-bottom: 80px; background-color: #fdfdfd;">
+<div class="register-page">
   <div class="container">
-    <form action="{{ action }}" method="post" enctype="multipart/form-data">
-      <div class="row" style="display:flex; flex-wrap:wrap; align-items:stretch;">
-        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="padding:0 15px;">
-          <div style="height:100%; min-height:360px; background:#fff; padding:40px; border-radius:12px; border:1px solid #eee; box-shadow:0 8px 20px rgba(0,0,0,.02); display:flex; flex-direction:column; justify-content:center;">
-            <h2 style="margin-top:0; color:#222;">E-posta doğrulama</h2>
-            <p style="font-size:16px; line-height:1.8; color:#666;">Yeni kayıt oluşturduğunuzda e-posta adresinize bir aktivasyon kodu gönderilir.</p>
-            <p style="font-size:16px; line-height:1.8; color:#666;">E-postanızı doğrulamak için gönderilen kodu bu formdaki aktivasyon alanına yazınız. Kod 15 dakika geçerlidir.</p>
-            {% if activation_required %}
-              <div style="margin-top:15px; padding:14px; background:#f6f8fa; border-radius:6px; color:#555;">Kod e-posta adresinize gönderildi. Gelen kutunuzu ve spam klasörünüzü kontrol ediniz.</div>
-            {% endif %}
+    <div class="register-layout row">
+      <div class="col-lg-12 col-md-12 col-sm-24 col-xs-24 register-info-col">
+        <section class="register-info">
+          <span class="register-eyebrow">Hızlı ve güvenli kayıt</span>
+          <h1>E-posta adresinizi doğrulayarak aramıza katılın.</h1>
+          <p class="register-lead">Kayıt formunu tamamladığınızda e-posta adresinize tek kullanımlık bir aktivasyon kodu gönderilir.</p>
+          <div class="register-steps">
+            <div class="register-step"><span>01</span><div><strong>Bilgilerinizi girin</strong><small>Formdaki alanları eksiksiz doldurun.</small></div></div>
+            <div class="register-step"><span>02</span><div><strong>Kodu kontrol edin</strong><small>E-postanıza gelen 6 haneli kodu kullanın.</small></div></div>
+            <div class="register-step"><span>03</span><div><strong>Kayıt işlemini tamamlayın</strong><small>Kod doğrulandıktan sonra hesabınız açılır.</small></div></div>
           </div>
-        </div>
+          <div class="register-note"><i class="fa fa-info-circle"></i><span>Kod 15 dakika geçerlidir. E-postayı göremezseniz spam klasörünü kontrol edin.</span></div>
+        </section>
+      </div>
 
-        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="padding:0 15px;">
-          <div style="background:#fff; padding:35px; border-radius:12px; border:1px solid #eee; box-shadow:0 8px 20px rgba(0,0,0,.02);">
-            <div style="margin-bottom:30px; border-bottom:1px solid #eee;">
-              <ul class="nav nav-tabs" style="display:flex; border:none; justify-content:space-around; margin:0;">
-                <li style="flex:1; text-align:center;"><a href="{{ login }}" style="font-size:16px; color:#bbb; border:none; padding-bottom:12px; display:block; background:transparent;">Giriş Yap</a></li>
-                <li class="active" style="flex:1; text-align:center;"><a href="{{ register }}" style="font-size:16px; color:#333; border:none; font-weight:600; padding-bottom:12px; display:block; background:transparent;">Üye Ol</a></li>
-              </ul>
+      <div class="col-lg-12 col-md-12 col-sm-24 col-xs-24 register-form-col">
+        <section class="register-card">
+          <div class="register-tabs">
+            <a href="{{ login }}">Giriş Yap</a>
+            <a href="{{ register }}" class="active">Üye Ol</a>
+          </div>
+
+          <div id="register-message" class="register-message" role="alert"></div>
+
+          <form id="register-form" action="{{ action }}" method="post" novalidate>
+            <div id="registration-fields">
+              <div class="form-row row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-24">
+                  <div class="form-group"><label for="firstname">{{ entry_firstname }}</label><input id="firstname" type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" class="form-control" required><div class="field-error" data-error="firstname"></div></div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-24">
+                  <div class="form-group"><label for="lastname">{{ entry_lastname }}</label><input id="lastname" type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" class="form-control" required><div class="field-error" data-error="lastname"></div></div>
+                </div>
+              </div>
+              <div class="form-group"><label for="dogum_tarihi">Doğum Tarihi</label><input id="dogum_tarihi" type="date" name="dogum_tarihi" value="{{ dogum_tarihi }}" class="form-control" required><div class="field-error" data-error="dogum"></div></div>
+              <div class="form-group"><label for="email">{{ entry_email }}</label><input id="email" type="email" name="email" value="{{ email }}" placeholder="{{ entry_email }}" class="form-control" required><div class="field-error" data-error="email"></div></div>
+              <div class="form-group"><label for="telephone">{{ entry_telephone }}</label><input id="telephone" type="tel" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" class="form-control" required><div class="field-error" data-error="telephone"></div></div>
+              <div class="form-row row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-24"><div class="form-group"><label for="password">{{ entry_password }}</label><input id="password" type="password" name="password" placeholder="{{ entry_password }}" class="form-control" required><div class="field-error" data-error="password"></div></div></div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-24"><div class="form-group"><label for="confirm">{{ entry_confirm }}</label><input id="confirm" type="password" name="confirm" placeholder="{{ entry_confirm }}" class="form-control" required><div class="field-error" data-error="confirm"></div></div></div>
+              </div>
+              <div class="register-agree"><label><input type="checkbox" name="agree" value="1" {% if agree %}checked{% endif %} required> <span>{{ text_agree }}</span></label></div>
+              <button type="submit" id="send-code" class="register-button">Kayıt ol ve kod gönder <i class="fa fa-arrow-right"></i></button>
             </div>
 
-            {% if not activation_required %}
-              <div class="row">
-                <div class="col-sm-12"><div class="form-group"><label>{{ entry_firstname }}</label><input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" class="form-control" />{% if error_firstname %}<div class="text-danger">{{ error_firstname }}</div>{% endif %}</div></div>
-                <div class="col-sm-12"><div class="form-group"><label>{{ entry_lastname }}</label><input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" class="form-control" />{% if error_lastname %}<div class="text-danger">{{ error_lastname }}</div>{% endif %}</div></div>
-              </div>
-              <div class="form-group"><label>Doğum Tarihi</label><input type="date" name="dogum_tarihi" value="{{ dogum_tarihi }}" class="form-control" />{% if error_dogum %}<div class="text-danger">{{ error_dogum }}</div>{% endif %}</div>
-              <div class="form-group"><label>{{ entry_email }}</label><input type="email" name="email" value="{{ email }}" placeholder="{{ entry_email }}" class="form-control" />{% if error_email %}<div class="text-danger">{{ error_email }}</div>{% endif %}</div>
-              <div class="form-group"><label>{{ entry_telephone }}</label><input type="tel" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" class="form-control" />{% if error_telephone %}<div class="text-danger">{{ error_telephone }}</div>{% endif %}</div>
-              <div class="row"><div class="col-sm-12"><div class="form-group"><label>{{ entry_password }}</label><input type="password" name="password" value="{{ password }}" placeholder="{{ entry_password }}" class="form-control" />{% if error_password %}<div class="text-danger">{{ error_password }}</div>{% endif %}</div></div><div class="col-sm-12"><div class="form-group"><label>{{ entry_confirm }}</label><input type="password" name="confirm" value="{{ confirm }}" placeholder="{{ entry_confirm }}" class="form-control" />{% if error_confirm %}<div class="text-danger">{{ error_confirm }}</div>{% endif %}</div></div></div>
-              <div class="form-group" style="margin:25px 0;"><label><input type="checkbox" name="agree" value="1" {% if agree %}checked{% endif %} /> {{ text_agree }}</label></div>
-            {% else %}
-              <div class="form-group" style="margin-top:20px;"><label for="activation-code">Aktivasyon Kodu</label><input id="activation-code" type="text" name="activation_code" value="{{ activation_code }}" placeholder="E-postanıza gelen 6 haneli kod" maxlength="6" inputmode="numeric" autocomplete="one-time-code" class="form-control" style="height:52px; font-size:20px; letter-spacing:4px; text-align:center;" autofocus />{% if error_activation_code %}<div class="text-danger">{{ error_activation_code }}</div>{% endif %}</div>
-            {% endif %}
-
-            {% if error_warning %}<div class="text-danger" style="margin:10px 0;">{{ error_warning }}</div>{% endif %}
-            <button type="submit" class="btn btn-primary btn-block" style="height:52px; font-size:16px; font-weight:600; background:#222; border:none; border-radius:6px;">{% if activation_required %}KODU DOĞRULA VE KAYDI TAMAMLA{% else %}KAYIT OL{% endif %}</button>
-          </div>
-        </div>
+            <div id="verification-fields" class="verification-box{% if not activation_required %} is-hidden{% endif %}">
+              <div class="verification-icon"><i class="fa fa-envelope-o"></i></div>
+              <h3>E-postanızı kontrol edin</h3>
+              <p>Gönderdiğimiz 6 haneli aktivasyon kodunu aşağıya yazın.</p>
+              <div class="form-group"><label for="activation-code">Aktivasyon Kodu</label><input id="activation-code" type="text" name="activation_code" value="{{ activation_code }}" maxlength="6" inputmode="numeric" autocomplete="one-time-code" class="form-control activation-input" placeholder="000000"><div class="field-error" data-error="activation_code"></div></div>
+              <button type="button" id="verify-code" class="register-button">Kodu doğrula ve kaydı tamamla <i class="fa fa-check"></i></button>
+              <button type="button" id="back-to-form" class="back-button">Bilgilerimi düzenle</button>
+            </div>
+          </form>
+        </section>
       </div>
-    </form>
+    </div>
   </div>
 </div>
 
 <style>
-.form-control { height:45px; border-radius:6px; }
-.form-group { margin-bottom:18px; }
-.form-group label { font-size:13px; color:#666; display:block; margin-bottom:6px; }
-.text-danger { color:#dc3545; font-size:13px; margin-top:5px; }
+.register-page{background:#f7f8fa;padding:100px 0 90px;color:#20242a}.register-layout{display:flex;align-items:stretch}.register-info-col,.register-form-col{padding:15px}.register-info,.register-card{height:100%;border-radius:18px}.register-info{padding:52px 48px;background:linear-gradient(145deg,#20242a,#343a40);color:#fff;box-shadow:0 18px 45px rgba(25,30,35,.13);display:flex;flex-direction:column;justify-content:center}.register-eyebrow{font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:#c9a86a;font-weight:700;margin-bottom:16px}.register-info h1{font-size:34px;line-height:1.2;margin:0 0 20px;font-weight:700}.register-lead{font-size:16px;line-height:1.75;color:#d8dce0;margin:0 0 34px;max-width:480px}.register-steps{border-top:1px solid rgba(255,255,255,.16)}.register-step{display:flex;gap:16px;padding:18px 0;border-bottom:1px solid rgba(255,255,255,.16)}.register-step>span{color:#c9a86a;font-size:13px;font-weight:700;padding-top:2px}.register-step strong,.register-step small{display:block}.register-step strong{font-size:15px;margin-bottom:5px}.register-step small{font-size:13px;color:#bfc5ca}.register-note{display:flex;gap:10px;margin-top:28px;padding:13px 15px;border:1px solid rgba(201,168,106,.35);border-radius:9px;color:#d7dbe0;font-size:12px;line-height:1.5}.register-note i{color:#c9a86a;font-size:15px;margin-top:2px}.register-card{background:#fff;padding:38px 42px;box-shadow:0 12px 35px rgba(30,35,40,.07);border:1px solid #edf0f2}.register-tabs{display:flex;border-bottom:1px solid #e8ebee;margin-bottom:28px}.register-tabs a{flex:1;text-align:center;padding:0 0 14px;color:#a1a7ad;text-decoration:none;font-size:15px}.register-tabs a.active{color:#20242a;font-weight:700;border-bottom:2px solid #c9a86a;margin-bottom:-1px}.form-row{margin-left:-8px;margin-right:-8px}.form-row>div{padding-left:8px;padding-right:8px}.form-group{margin-bottom:18px}.form-group label{display:block;font-size:12px;color:#5c636a;font-weight:600;margin-bottom:7px}.form-control{height:46px;border:1px solid #dfe4e8;border-radius:8px;box-shadow:none;padding:10px 13px;transition:border-color .2s,box-shadow .2s}.form-control:focus{border-color:#c9a86a;box-shadow:0 0 0 3px rgba(201,168,106,.13)}.register-agree{font-size:12px;color:#70777e;margin:8px 0 22px}.register-agree input{vertical-align:middle;margin-right:6px}.register-button{width:100%;height:50px;border:0;border-radius:8px;background:#20242a;color:#fff;font-size:14px;font-weight:700;letter-spacing:.2px;transition:background .2s,transform .2s}.register-button:hover{background:#c0954e;transform:translateY(-1px)}.register-button i{margin-left:8px}.verification-box{text-align:center;padding:10px 0 4px}.verification-icon{width:58px;height:58px;line-height:58px;border-radius:50%;margin:0 auto 15px;background:#fbf7ef;color:#c0954e;font-size:24px}.verification-box h3{margin:0 0 8px;font-size:22px}.verification-box p{color:#747b82;font-size:13px;margin:0 0 23px}.activation-input{text-align:center;font-size:22px;letter-spacing:7px}.back-button{border:0;background:none;color:#8a6b37;margin-top:17px;font-size:12px}.is-hidden{display:none}.register-message{display:none;border-radius:8px;padding:11px 13px;margin:-8px 0 20px;font-size:13px}.register-message.success{display:block;background:#edf8f0;color:#26743d}.register-message.error{display:block;background:#fff0f0;color:#a83232}.field-error{color:#c83232;font-size:11px;margin-top:5px;min-height:0}.field-error:not(:empty){min-height:15px}@media(max-width:767px){.register-page{padding:35px 0 50px}.register-info{padding:32px 25px}.register-info h1{font-size:27px}.register-card{padding:28px 20px}.register-info-col,.register-form-col{padding:8px 15px}.register-info{min-height:0}.register-step{padding:14px 0}}
 </style>
 {{ footer }}
+<script>
+(function($){
+  var form=$('#register-form'), message=$('#register-message'), registration=$('#registration-fields'), verification=$('#verification-fields');
+  function showMessage(text,type){message.removeClass('success error').addClass(type).text(text).show();}
+  function clearErrors(){ $('.field-error').text(''); message.hide(); }
+  function renderErrors(errors){$.each(errors||{},function(key,value){$('[data-error="'+key+'"]').text(value);});}
+  function ajax(url,data,done){$.ajax({url:url,type:'post',data:data,dataType:'json'}).done(done).fail(function(){showMessage('İşlem sırasında bir hata oluştu. Lütfen tekrar deneyin.','error');});}
+  form.on('submit',function(e){e.preventDefault(); if(!$('#verification-fields').hasClass('is-hidden')) return false; clearErrors(); var button=$('#send-code').prop('disabled',true); ajax('{{ send_code_url }}',form.serialize(),function(result){button.prop('disabled',false);if(result.success){registration.addClass('is-hidden');verification.removeClass('is-hidden');showMessage(result.message,'success');$('#activation-code').focus();}else{renderErrors(result.errors);if(result.message)showMessage(result.message,'error');}});});
+  $('#verify-code').on('click',function(){clearErrors();var button=$(this).prop('disabled',true);ajax('{{ verify_code_url }}',{activation_code:$('#activation-code').val()},function(result){button.prop('disabled',false);if(result.success){window.location.href=result.redirect;}else{if(result.message)showMessage(result.message,'error');$('[data-error="activation_code"]').text(result.message||'Kod hatalı.');}});});
+  $('#back-to-form').on('click',function(){verification.addClass('is-hidden');registration.removeClass('is-hidden');message.hide();});
+})(jQuery);
+</script>
